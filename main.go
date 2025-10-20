@@ -47,8 +47,11 @@ func main() {
 		}
 
 		departures, err := NextMetro(name, direction, stop, amount)
-		if err != nil {
+		if err != nil && !strings.Contains(err.Error(), "departures") {
 			http.Error(w, fmt.Sprintf("There was an issue. Please double check the name and direction."), http.StatusInternalServerError)
+			return
+		} else if err != nil {
+			http.Error(w, fmt.Sprintf("No upcoming departures."), http.StatusOK)
 			return
 		}
 

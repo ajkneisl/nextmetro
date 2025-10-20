@@ -129,7 +129,7 @@ func NextMetro(routeId string, direction string, stopId string, amount int) ([]*
 	}
 
 	if len(results) == 0 {
-		return nil, errors.New("no upcoming Blue Line departures found at this stop")
+		return nil, errors.New("no upcoming departures")
 	}
 
 	return results, nil
