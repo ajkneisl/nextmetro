@@ -12,7 +12,8 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		parts := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
 
-		if len(parts) != 3 {
+		// assuming /metro/name/stop/dir
+		if len(parts) != 4 {
 			http.Error(w, "Usage: /{name}/{stop}/{north|south|east|west}", http.StatusBadRequest)
 			return
 		}
@@ -29,16 +30,16 @@ func main() {
 			amount = 1
 		}
 
-		name := parts[0]
+		name := parts[1]
 
 		// check if it's one of the possible shortened names
-		metroName, foundName := metroNames[strings.ToUpper(parts[0])]
+		metroName, foundName := metroNames[strings.ToUpper(parts[1])]
 		if foundName {
 			name = metroName
 		}
 
-		stop := parts[1]
-		directionStr := parts[2]
+		stop := parts[2]
+		directionStr := parts[3]
 
 		// the direction
 		direction := SouthBound
